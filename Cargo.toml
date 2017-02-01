@@ -1,0 +1,6 @@
+[package]
+name = "pz5"
+version = "0.1.0"
+authors = ["trionprog <trionprog@gmail.com>"]
+
+[dependencies]
