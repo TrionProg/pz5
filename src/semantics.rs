@@ -112,6 +112,7 @@ impl<'a> Semantics<'a>{
     }
 }
 
+//TODO:how to use semantics error?
 #[derive(Debug)]
 pub enum Error{
     LexerError(lexer::Error),
@@ -132,8 +133,8 @@ impl std::fmt::Display for Error{
 }
 
 impl From<lexer::Error> for Error {
-    fn from(e:lexer::Error) -> Error {
-        Error::LexerError(e)
+    fn from(error:lexer::Error) -> Error {
+        Error::LexerError(error)
     }
 }
 
