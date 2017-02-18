@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["trionprog <trionprog@gmail.com>"]
 
 [dependencies]
+rustc-serialize = "*"
+config = { path = "../config" }

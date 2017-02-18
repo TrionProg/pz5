@@ -19,7 +19,7 @@ pub struct SemanticsSourceLayer<'a>{
 }
 
 #[derive(Copy,Clone)]
-pub enum SemanticsSourceLayerType{
+pub enum SemanticsSourceLayerType{//TODO:use f32, f64 etc
     Float,
     Int,
 }
