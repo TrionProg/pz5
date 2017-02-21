@@ -3,30 +3,30 @@ use std;
 use lexer;
 use lexer::{Cursor,Lexeme};
 
-pub struct Semantics<'a>{
-    pub sources:Vec<SemanticsSource<'a>>,
+pub struct VertexFormat<'a>{
+    pub sources:Vec<VertexFormatSource<'a>>,
 }
 
-pub struct SemanticsSource<'a>{
+pub struct VertexFormatSource<'a>{
     pub name:&'a str,
     pub is_index:bool,
-    pub layers:Vec<SemanticsSourceLayer<'a>>,
+    pub layers:Vec<VertexFormatSourceLayer<'a>>,
 }
 
-pub struct SemanticsSourceLayer<'a>{
+pub struct VertexFormatSourceLayer<'a>{
     pub name:&'a str,
-    pub layer_type:SemanticsSourceLayerType,
+    pub layer_type:VertexFormatSourceLayerType,
 }
 
 #[derive(Copy,Clone)]
-pub enum SemanticsSourceLayerType{//TODO:use f32, f64 etc
+pub enum VertexFormatSourceLayerType{//TODO:use f32, f64 etc
     Float,
     Int,
 }
 
-impl<'a> Semantics<'a>{
-    pub fn parse(semantics_text:&'a String) -> Result<Semantics<'a>, Error>{
-        let mut cursor=Cursor::new( semantics_text );
+impl<'a> VertexFormat<'a>{
+    pub fn parse(vertex_format_text:&'a String) -> Result<VertexFormat<'a>, Error>{
+        let mut cursor=Cursor::new( vertex_format_text );
 
         let mut sources=Vec::new();
 
@@ -59,8 +59,8 @@ impl<'a> Semantics<'a>{
                                 let layer_type=match cursor.next()?{
                                     Lexeme::String(type_str) => {
                                         match type_str {
-                                            "float" => SemanticsSourceLayerType::Float,
-                                            "integer" => SemanticsSourceLayerType::Int,
+                                            "float" => VertexFormatSourceLayerType::Float,
+                                            "integer" => VertexFormatSourceLayerType::Int,
                                             _ => return Err( Error::UnexpectedLexeme(cursor.printLine(), "float or integer", cursor.lex.print()) ),
                                         }
                                     },
@@ -68,7 +68,7 @@ impl<'a> Semantics<'a>{
                                 };
 
                                 layers.push(
-                                    SemanticsSourceLayer{
+                                    VertexFormatSourceLayer{
                                         name:layer_name,
                                         layer_type:layer_type,
                                     }
@@ -85,11 +85,11 @@ impl<'a> Semantics<'a>{
                     }
 
                     if layers.len()==0 {
-                        return Err( Error::Other(format!("Source \"{}\" of semantics is empty",source_name)) );
+                        return Err( Error::Other(format!("Source \"{}\" of vertex_format is empty",source_name)) );
                     }
 
                     sources.push(
-                        SemanticsSource{
+                        VertexFormatSource{
                             name:source_name,
                             is_index:is_index,
                             layers:layers,
@@ -101,18 +101,18 @@ impl<'a> Semantics<'a>{
         }
 
         if sources.len()==0 {
-            return Err( Error::Other(String::from("Semantics is empty")) );
+            return Err( Error::Other(String::from("VertexFormat is empty")) );
         }
 
         Ok(
-            Semantics{
+            VertexFormat{
                 sources:sources,
             }
         )
     }
 }
 
-//TODO:how to use semantics error?
+//TODO:how to use vertex_format error?
 #[derive(Debug)]
 pub enum Error{
     LexerError(lexer::Error),

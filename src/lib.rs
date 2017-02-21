@@ -3,14 +3,17 @@ extern crate config;
 
 mod lexer;
 
-mod semantics;
-pub use semantics::{Semantics,SemanticsSource,SemanticsSourceLayer,SemanticsSourceLayerType};
+mod vertex_format;
+pub use vertex_format::{VertexFormat,VertexFormatSource,VertexFormatSourceLayer,VertexFormatSourceLayerType};
 
 mod error;
 pub use error::Error;
 
 mod geometry_type;
 pub use geometry_type::GeometryType;
+
+mod geometry;
+pub use geometry::Pz5Geometry;
 
 mod to_pz5;
 pub use to_pz5::{ToPz5BinaryData, ToPz5LOD, ToPz5Mesh, ToPz5Model};
