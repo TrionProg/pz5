@@ -6,3 +6,4 @@ authors = ["trionprog <trionprog@gmail.com>"]
 [dependencies]
 rustc-serialize = "*"
 config = { path = "../config" }
+lexer = { path = "../lexer" }

@@ -1,5 +1,5 @@
 use std;
-use VertexFormat;
+use vertex_format::VertexFormat;
 
 pub struct Pz5Geometry{
     data:Vec<u8>,

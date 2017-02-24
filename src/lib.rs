@@ -1,10 +1,8 @@
 extern crate rustc_serialize;
 extern crate config;
+extern crate lexer;
 
-mod lexer;
-
-mod vertex_format;
-pub use vertex_format::{VertexFormat,VertexFormatSource,VertexFormatSourceLayer,VertexFormatSourceLayerType};
+pub mod vertex_format;
 
 mod error;
 pub use error::Error;
