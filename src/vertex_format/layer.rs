@@ -17,6 +17,13 @@ pub enum VertexFormatSourceLayerType{
 }
 
 impl<'a> VertexFormatSourceLayer<'a>{
+    pub fn new(name:&'a str, layer_type:VertexFormatSourceLayerType) -> Self {
+        VertexFormatSourceLayer{
+            name:name,
+            layer_type:layer_type,
+        }
+    }
+
     pub fn parse(cursor:& mut Cursor<'a>, layer_name:&'a str) -> Result<Self, Error<'a>>{
         if cursor.next_lex()? != Lexeme::Colon {
             return Err( Error::UnexpectedLexemeAfter(cursor.get_line(), ":<type>", layer_name, cursor.lex.clone()) );
@@ -33,23 +40,29 @@ impl<'a> VertexFormatSourceLayer<'a>{
             _ => return Err( Error::UnexpectedLexeme(cursor.get_line(), "f32 or i32", cursor.lex.clone()) ),
         };
 
-        Ok(
-            VertexFormatSourceLayer{
-                name:layer_name,
-                layer_type:layer_type,
-            }
-        )
+        Ok( VertexFormatSourceLayer::new(layer_name, layer_type) )
     }
 
     pub fn print(&self, vertex_format_text:&mut String){
         vertex_format_text.push_str(self.name);
         vertex_format_text.push_str(":");
 
-        vertex_format_text.push_str(
-            match self.layer_type{
-                VertexFormatSourceLayerType::F32 => "f32",
-                VertexFormatSourceLayerType::I32 => "i32",
-            }
-        );
+        vertex_format_text.push_str(self.layer_type.print());
+    }
+}
+
+impl VertexFormatSourceLayerType {
+    pub fn get_size(&self) -> usize {
+        match *self{
+            VertexFormatSourceLayerType::F32 => 4,
+            VertexFormatSourceLayerType::I32 => 4,
+        }
+    }
+
+    pub fn print(&self) -> &'static str {
+        match *self{
+            VertexFormatSourceLayerType::F32 => "f32",
+            VertexFormatSourceLayerType::I32 => "i32",
+        }
     }
 }

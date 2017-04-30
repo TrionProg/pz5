@@ -236,7 +236,7 @@ impl Matrix4 {
     fn from_euler(euler:&Euler) -> Self{
         let mut mat=[0.0;16];//TODO:unsafe do not zero
 
-        let pitch=euler.pitch/DEGRESS_IN_RADIAN;
+        let pitch=-euler.pitch/DEGRESS_IN_RADIAN;
         let yaw=euler.yaw/DEGRESS_IN_RADIAN;
         let roll=euler.roll/DEGRESS_IN_RADIAN;
 

@@ -11,6 +11,12 @@ pub struct VertexFormat<'a>{
 }
 
 impl<'a> VertexFormat<'a>{
+    pub fn new(sources:Vec<VertexFormatSource<'a>>) -> Self {
+        VertexFormat{
+            sources:sources,
+        }
+    }
+
     pub fn parse(vertex_format_text:&'a String) -> Result<Self, Error<'a>>{
         let mut sources=Vec::new();
 
@@ -32,11 +38,7 @@ impl<'a> VertexFormat<'a>{
             return Err( Error::VertexFormatIsEmpty );
         }
 
-        Ok(
-            VertexFormat{
-                sources:sources,
-            }
-        )
+        Ok( VertexFormat::new(sources) )
     }
 
     pub fn remove_indexes(&mut self) {
